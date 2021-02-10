@@ -55,3 +55,9 @@ Route::get('branch_details', 'BranchController@show');
 
 // Branch Data edit
 Route::get('/branch_edit/{id}', ['as'=>'branch-edit' , 'uses'=>'BranchController@edit']);
+
+// Branch Data update
+Route::post('/branch_update/{id}', ['as'=>'branch-update' , 'uses'=>'BranchController@update']);
+
+// Branch Data edit
+Route::get('/branch_delete/{id}', ['as'=>'branch-delete' , 'uses'=>'BranchController@destroy']);

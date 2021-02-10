@@ -17,8 +17,8 @@
                 <td>{{$branch->id}}</td>
                 <td>{{$branch->branch_short_name}}</td>
                 <td>{{$branch->branch_full_name}}</td>
-                <td><!--<a href="{{route('branch-edit', ['id' => $branch->id])}}">Edit</a> --></td>
-                <td><!--<a href="{{route('branch-delete', ['id' => $branch->id])}}">Delete</a>--></td>
+                <td class="text-center"><a href="{{ route('branch-edit', ['id' => $branch->id])}}"><i class="fa fa-edit"></i></a></td>
+                <td class="text-center"><a href="{{ route('branch-delete', ['id' => $branch->id])}}"><i class="fa fa-trash"></i></a></td>
             </tr>
             @endforeach
         </tbody>
