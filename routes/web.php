@@ -42,6 +42,12 @@ Route::post('/student_update/{id}', ['as'=>'student-update', 'uses'=>'StudentCon
 // student data delete
 Route::get('/student_delete/{id}', ['as'=>'student-delete', 'uses'=>'StudentController@destroy']);
 
+// fetch course data using select by branch
+Route::post('/student/courses', 'StudentController@courses');
+
+// searching data with ajax
+Route::get('student_details_ajax', 'StudentController@ajax_show');
+
 ########################### FOR Branch #######################
 
 // branch details

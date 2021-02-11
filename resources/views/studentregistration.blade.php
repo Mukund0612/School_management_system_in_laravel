@@ -27,7 +27,7 @@
             </div>
             <div class="x_content">
                 <br />
-                <form action="{{ url('student_insert')}}" method='POST' id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
+                <form action="{{ url('student_insert')}}" method='POST' id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Student Name <span
@@ -74,6 +74,37 @@
                                 type="text">
                         </div>
                     </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Branch: <span
+                                class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <select name="branch_id" id="" class="date-picker form-control col-md-7 col-xs-12 branches">
+                                <option value="">-- Select Branch --</option>
+                                @foreach($branches as $branch)
+                                <option value="{{$branch->id}}">{{$branch->branch_full_name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Course: <span
+                                class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <select name="course_id" id="" class="date-picker form-control col-md-7 col-xs-12 courses">
+                                <option value="">-- Select Course --</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Profile Image: <span
+                                class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input type="file" name="profile_image" id="image" class="date-picker form-control col-md-7 col-xs-12">
+                        </div>
+                    </div>
                     <div class="ln_solid"></div>
                     <div class="form-group">
                         <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
@@ -88,3 +119,36 @@
     </div>
 </div>
 @endsection
+
+@push('footer-scripts')
+<script text="text/javascript">
+    $(document).on('change', '.branches', function(){
+        branch_id = $(this).val();
+        $.ajax({
+            url: 'student/courses',
+            dataType: 'json',
+            method: 'POST',
+            data:{
+                'id':branch_id, '_token': "{{ csrf_token() }}"
+            },
+            success: function(data){
+                
+                var courses = '<option value="">-- Select Course --</option>';
+                var arr = data.courses.length;
+                var aa = data.courses;
+
+                for (var i = 0; i < arr; i++) {
+                    courses += '<option value="'+aa[i].id+'"> '+aa[i].course_name+' </option>';
+                }
+                
+                // console.log(courses.length);
+                if (arr == 0) {
+                    courses = '<option value=""> No Coures Available </option>';
+                }
+
+                $('.courses').html(courses);
+            }
+        })
+    });
+</script>
+@endpush
