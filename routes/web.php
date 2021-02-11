@@ -61,3 +61,23 @@ Route::post('/branch_update/{id}', ['as'=>'branch-update' , 'uses'=>'BranchContr
 
 // Branch Data edit
 Route::get('/branch_delete/{id}', ['as'=>'branch-delete' , 'uses'=>'BranchController@destroy']);
+
+########################### FOR COURSE #######################
+
+// Course details
+Route::get('add_course', 'CourseController@create');
+
+// Course Data Insert
+Route::post('course_insert', 'CourseController@store');
+
+// Course Data Insert
+Route::get('course_details', 'CourseController@show');
+
+// Branch Data edit
+Route::get('/course_edit/{id}', ['as'=>'course-edit' , 'uses'=>'CourseController@edit']);
+
+// Branch Data update
+Route::post('/course-update/{id}', ['as'=>'course-update' , 'uses'=>'CourseController@update']);
+
+// Branch Data edit
+Route::get('/course_delete/{id}', ['as'=>'course-delete' , 'uses'=>'CourseController@destroy']);

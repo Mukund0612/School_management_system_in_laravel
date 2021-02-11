@@ -11,29 +11,14 @@
             </li>
             <li><a><i class="fa fa-edit"></i> Course <span class="fa fa-chevron-down"></span></a>
                 <ul class="nav child_menu">
-                    <li><a href="inbox.html">Add Course</a></li>
-                    <li><a href="calendar.html">View Course</a></li>
+                    <li><a href="{{url('add_course')}}">Add Course</a></li>
+                    <li><a href="{{url('course_details')}}">View Course</a></li>
                 </ul>
             </li>
             <li><a><i class="fa fa-table"></i> Branch <span class="fa fa-chevron-down"></span></a>
                 <ul class="nav child_menu">
                     <li><a href="{{url('add_branch')}}">Add Branch</a></li>
                     <li><a href="{{url('branch_details')}}">View Branch</a></li>
-                </ul>
-            </li>
-            <li><a><i class="fa fa-bar-chart-o"></i> Data Presentation <span class="fa fa-chevron-down"></span></a>
-                <ul class="nav child_menu">
-                    <li><a href="chartjs.html">Chart JS</a></li>
-                    <li><a href="chartjs2.html">Chart JS2</a></li>
-                    <li><a href="morisjs.html">Moris JS</a></li>
-                    <li><a href="echarts.html">ECharts</a></li>
-                    <li><a href="other_charts.html">Other Charts</a></li>
-                </ul>
-            </li>
-            <li><a><i class="fa fa-clone"></i>Layouts <span class="fa fa-chevron-down"></span></a>
-                <ul class="nav child_menu">
-                    <li><a href="fixed_sidebar.html">Fixed Sidebar</a></li>
-                    <li><a href="fixed_footer.html">Fixed Footer</a></li>
                 </ul>
             </li>
         </ul>

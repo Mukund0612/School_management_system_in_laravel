@@ -6,8 +6,8 @@
     <table class="table table-bordered">
         <thead>
             <th>No.</th>
-            <th>Branch Short Name</th>
             <th>Branch Full Name</th>
+            <th>Course Name</th>
             <th>Edit</th>
             <th>Delete</th>
         </thead>
