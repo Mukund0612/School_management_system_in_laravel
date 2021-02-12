@@ -137,8 +137,8 @@ class StudentController extends Controller
     public function ajax_show(Request $request)
     {
         if ($request->ajax()) {
-            $sort_by = $request->get('short_by'); 
-            $sort_by = $request->get('short_type'); 
+            $short_by = $request->get('short_by'); 
+            $short_type = $request->get('short_type'); 
             $search = $request->get('search');
             $search = str_replace(' ', '%', $search);
 
@@ -148,7 +148,7 @@ class StudentController extends Controller
                                 ->paginate(3);
 
             // $student = students::paginate(2);
-            return view('student_details_ajax', compact('student'));
+            return view('student_details_ajax', compact('students'));
         }
     }
 }

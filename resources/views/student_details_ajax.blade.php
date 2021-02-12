@@ -1,4 +1,3 @@
-<tbody>
     @foreach($students as $student)
     <tr>
         <td>{{$student->id}}</td>
@@ -11,8 +10,4 @@
         <td><a href="{{route('student-delete', ['id' => $student->id])}}">Delete</a></td>
     </tr>
     @endforeach
-</tbody>
-</table>
-<div class="pag_link">
-    {{$students->links()}}
-</div>
+    <tr><td class="pag_link" colspan="8">{{$students->links()}}</td></tr>

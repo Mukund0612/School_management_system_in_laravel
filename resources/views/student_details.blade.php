@@ -18,24 +18,25 @@
             <th>Edit</th>
             <th>Delete</th>
         </thead>
-        @include('student_details_ajax')
-
+        <tbody>
+            @include('student_details_ajax')
+        </tbody>
+    </table>
         <input type="hidden" name="hidden_page" id="hidden_page" value="1" />
-        <input type="hidden" name="hidden_column_name" id="hidden_column_name" value="1id" />
+        <input type="hidden" name="hidden_column_name" id="hidden_column_name" value="id" />
         <input type="hidden" name="hidden_short_type" id="hidden_short_type" value="asc" />
 </div>
 
 @endsection
 
-@push('footer_scripts')
+@push('footer-scripts')
 <script type="text/javascript">
-    $(document).ready({
+    $(document).ready(function(){
         // for fetch and view all data using ajax
         function fetch_data(page, short_type="", short_by="", search="")
         {
-            console.log("<?php// echo URL::to('/'); ?>/student_details_ajax?page="+page+"&short_type="+short_type+"&short_by="+short_by+"&search="+search);
             $.ajax({
-                url: "<?php// echo URL::to('/'); ?>/student_details_ajax?page="+page+"&short_type="+short_type+"&short_by="+short_by+"&search="+search,
+                url: "<?php echo URL::to('/'); ?>/student_details_ajax?page="+page+"&short_type="+short_type+"&short_by="+short_by+"&search="+search,
                 success: function(data){
                     $('.search_content tbody').html(data);
                 }
@@ -47,8 +48,7 @@
             var search = $('#student_search').val();
             var column_name = $('#hidden_column_name').val();
             var short_type = $('#hidden_short_type').val();
-            var page = $(this).attr('href').split('page=')[1];
-
+            var page = $('#hidden_page');
             fetch_data(page, short_type, column_name, search);
         });
 
