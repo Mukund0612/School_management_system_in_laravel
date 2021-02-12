@@ -6,6 +6,15 @@
 
 <input type="text" class="form-control" id="student_search" placeholder="Search for.........." style="margin: 10px 0px" />
 
+    <input type="checkbox" class="paramiter" id="paramiter_1" name="param[]" value=" fath_name">
+    Father name
+    <input type="checkbox" class="paramiter" id="paramiter_2" name="param[]" value="class">
+    Class
+    <input type="checkbox" class="paramiter" id="paramiter_3" name="param[]" value="phone_no">
+    Phone Number
+    <input type="checkbox" class="paramiter" id="paramiter_4" name="param[]" value="email">
+    Email
+
 <div class="table-responcive">
     <table class="table table-bordered search_content">
         <thead>
@@ -15,6 +24,8 @@
             <th>Class</th>
             <th>Phone Number</th>
             <th>Email</th>
+            <th>View Profile</th>
+            <th>Add fees</th>
             <th>Edit</th>
             <th>Delete</th>
         </thead>
@@ -84,6 +95,22 @@
             var page = $(this).attr('href').split('page=')[1];
 
             fetch_data(page, short_type, column_name, search);
+        })
+
+        // fetch data on clicking on check box on the fields
+        $(document).on('click', '.paramiter', function(){
+            var filter = [];
+                $('.paramiter:checked').each(function(){
+                    filter.push($(this).val());
+                })
+            
+            $.ajax({
+                url: "<?php echo URL::to('/'); ?>/student_details?filter="+filter,
+                success: function(data){
+                    $('.search_content tbody').html(data);
+                }
+            })
+            
         })
     });
 </script>

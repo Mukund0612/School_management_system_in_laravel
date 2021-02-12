@@ -1,0 +1,13 @@
+.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th{
+    padding: 10px !important;
+    line-height: 4 !important;
+    vertical-align: center !important;
+}
+
+.container .row{
+    margin: 50px 0px !important;
+}
+
+.container .row td{
+    font-size: 20px !important;
+}

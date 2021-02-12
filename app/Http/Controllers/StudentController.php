@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\students;
 use App\branch;
 use App\course;
+use App\student_fees;
 
 class StudentController extends Controller
 {
@@ -63,10 +64,29 @@ class StudentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show()
+    public function show(Request $request)
     {
-        $students = students::paginate(2);
-        return view('student_details', compact('students'));
+        $student_cols = $request->get('filter');
+
+        if ($request->ajax()) {
+            if ($student_cols) {
+                $columns = explode(',', $student_cols);
+                $student = students::select('id', 'stu_name');
+
+                foreach ($columns as $key => $value) {
+                    $student->addselect($value);
+                }
+
+                $students = $student->paginate(2);
+                return view('student_details_ajax', compact('students'));
+            } else {
+                $students = students::select('id', 'stu_name')->paginate(2);
+                return view('student_details_ajax', compact('students'));
+            }
+        } else {
+            $students = students::select('id', 'stu_name')->paginate(2);
+            return view('student_details', compact('students'));
+        }
     }
 
     /**
@@ -145,10 +165,54 @@ class StudentController extends Controller
             $students = students::where('stu_name', 'like', '%'.$search.'%')
                                 ->orWhere('fath_name', 'like', '%'.$search.'%')
                                 ->orderBy($short_by, $short_type)
-                                ->paginate(3);
+                                ->paginate(2);
 
             // $student = students::paginate(2);
             return view('student_details_ajax', compact('students'));
         }
+    }
+    
+    /**
+     * View single student profile
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function single_student(Request $request)
+    {
+        $id = $request->id;
+        $student = students::where(['id' => $id])->get();
+        
+        return view('student_profile', compact('student'));
+    }
+    
+    /**
+     * View single student profile
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function fees_form(Request $request)
+    {
+        // die('yes');
+        $id = $request->id;
+        $fees = student_fees::where(['student_id' => $id])->get();
+        return view('fees_form', compact('fees', 'id'));
+    }
+    
+    /**
+     * View single student profile
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function pay_fees(Request $request)
+    {
+        $id = $request->id;
+        $fees = new student_fees;
+        $fees->student_id = $id;
+        $fees->amount = $request->amount;
+        $fees->save();
+        return redirect( route('student-fees', ['id' => $id]));
     }
 }

@@ -48,6 +48,18 @@ Route::post('/student/courses', 'StudentController@courses');
 // searching data with ajax
 Route::get('student_details_ajax', 'StudentController@ajax_show');
 
+// short by column asendind or desending
+Route::post('student_details_2', 'StudentController@show');
+
+// Single student data view
+Route::get('/single_student/{id}', ['as'=>'single-student', 'uses'=>'StudentController@single_student']);
+
+// Single student data view
+Route::get('/student_fees/{id}', ['as'=>'student-fees', 'uses'=>'StudentController@fees_form']);
+
+// Befor fees form submit
+Route::post('pay_fees', 'StudentController@pay_fees');
+
 ########################### FOR Branch #######################
 
 // branch details
