@@ -2,12 +2,9 @@
 
 namespace App\Http\Middleware;
 
-use Illuminate\Support\Facades\Route;
-use Session;
-
 use Closure;
 
-class BeforeLogin
+class afterLogin
 {
     /**
      * Handle an incoming request.
@@ -17,11 +14,10 @@ class BeforeLogin
      * @return mixed
      */
     public function handle($request, Closure $next)
-    {   
-        if (!session()->has('admin_session')) {
-            return redirect('/');
+    {
+        if (session()->has('admin_session')) {
+            return redirect('/dashboard');
         }
-
         return $next($request);
     }
 }

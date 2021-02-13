@@ -101,7 +101,10 @@
                 <li class="">
                     <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown"
                         aria-expanded="false">
-                        <img src="{{ asset('production/images/img.jpg')}}" alt="">John Doe
+                        <img src="{{ asset('production/images/img.jpg')}}" alt="">
+                        @if(session()->has('admin_session'))
+                            Admin
+                        @endif
                         <span class=" fa fa-angle-down"></span>
                     </a>
                     <ul class="dropdown-menu dropdown-usermenu pull-right">

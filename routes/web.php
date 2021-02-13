@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 //     return view('welcome');
 // });
 
-Route::get('/', 'AdminController@adminlogin');
+Route::get('/', 'AdminController@adminlogin')->middleware('afterLogin');
 
 Route::post('islogin', 'AdminController@adminloged');
 
