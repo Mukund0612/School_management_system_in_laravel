@@ -38,10 +38,20 @@ class CourseController extends Controller
      */
     public function store(Request $request)
     {
+        // set validation
+        $request->validate([
+            'branch_id' => 'required',
+            'course_name' => 'required | min:2'
+        ]);
+
         $course = new course;
         $course->branch_id = $request->branch_id;
         $course->course_name = $request->course_name;
         $course->save();
+
+        // add flash message
+            session()->flash('insert', 'Insert Course SuccessFully..');
+
         return redirect('add_course');
     }
 
@@ -105,10 +115,20 @@ class CourseController extends Controller
      */
     public function update(Request $request, $id)
     {
+        // set validation
+        $request->validate([
+            'branch_id' => 'required',
+            'course_name' => 'required | min:2'
+        ]);
+
         $courses = course::find($id);
         $courses->branch_id = $request->branch_id;
         $courses->course_name = $request->course_name;
         $courses->save();
+
+        // add flash message
+        session()->flash('update', 'Update Course SuccessFully..');
+
         return redirect('course_details');
     }
 
@@ -122,6 +142,10 @@ class CourseController extends Controller
     {
         $courses = course::find($id);
         $courses->delete();
+
+        // add flash message
+        session()->flash('delete', 'Delete Course SuccessFully..');
+
         return redirect('course_details');
     }
 }

@@ -2,6 +2,27 @@
 
 @section('content')
 <h1>Students Details</h1>
+
+<!-- Flash message after update branch -->
+@if(session()->has('update'))
+    <div class="alert alert-success">
+        {{session()->get('update')}}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+@endif
+
+<!-- Flash message after Delete branch -->
+@if(session()->has('delete'))
+    <div class="alert alert-danger">
+        {{session()->get('delete')}}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+@endif
+
 <div class="table-responcive">
     <table class="table table-bordered">
         <thead>

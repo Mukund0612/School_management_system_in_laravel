@@ -1,7 +1,7 @@
 @extends('layouts.default')
 
 @section('content')
-<h1>Add Course</h1>
+<h1>Update Course</h1>
 <div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
@@ -45,6 +45,9 @@
                                     <option value="{{$branch->id}}" {{$select}}>{{$branch->branch_full_name}}</option>
                                 @endforeach
                             </select>
+                            @error('branch_id')
+                                <p class="validetion_error">{{$message}}</p>
+                            @enderror
                         </div>
                     </div>
                     <div class="form-group">
@@ -52,8 +55,10 @@
                                 class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                            <input type="text" name="course_name" required="required"
-                                class="form-control col-md-7 col-xs-12" value="{{$courses['courses']->course_name}}">
+                            <input type="text" name="course_name" class="form-control col-md-7 col-xs-12" value="{{$courses['courses']->course_name}}">
+                            @error('course_name')
+                                <p class="validetion_error">{{$message}}</p>
+                            @enderror
                         </div>
                     </div>
                    <div class="ln_solid"></div>

@@ -11,3 +11,15 @@
 .container .row td{
     font-size: 20px !important;
 }
+
+.input_fields .form-control{
+    margin: unset !important;
+}
+
+.input_fields{
+    margin-bottom: 20px !important;
+}
+
+.validetion_error{
+    color:red;
+}

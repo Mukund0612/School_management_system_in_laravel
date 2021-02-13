@@ -34,8 +34,10 @@
                                 class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                            <input type="text" name="branch_short_name" required="required"
-                                class="form-control col-md-7 col-xs-12" value="{{$branches->branch_short_name}}">
+                            <input type="text" name="branch_short_name" class="form-control col-md-7 col-xs-12" value="{{$branches->branch_short_name}}">
+                            @error('branch_short_name')
+                                <p class="validation_error">{{$message}}</p>
+                            @enderror
                         </div>
                     </div>
                     <div class="form-group">
@@ -43,8 +45,10 @@
                                 class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                            <input type="text" name="branch_full_name" required="required"
-                                class="form-control col-md-7 col-xs-12" value="{{$branches->branch_full_name}}">
+                            <input type="text" name="branch_full_name" class="form-control col-md-7 col-xs-12" value="{{$branches->branch_full_name}}">
+                            @error('branch_full_name')
+                                <p class="validation_error">{{$message}}</p>
+                            @enderror
                         </div>
                     </div>
                     <div class="ln_solid"></div>

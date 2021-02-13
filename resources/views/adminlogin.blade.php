@@ -20,6 +20,8 @@
 
     <!-- Custom Theme Style -->
     <link href="{{ asset('/build/css/custom.min.css')}}" rel="stylesheet">
+
+    <link href="{{ asset('/build/css/myCss.css')}}" rel="stylesheet">
   </head>
 
   <body class="login">
@@ -40,11 +42,17 @@
             <form method='POST' action="{{ url('islogin')}}">
               <h1>Login Form</h1>
               @csrf
-              <div>
-                <input type="text" class="form-control" placeholder="Username" name="username" required="" />
+              <div class="input_fields">
+                <input type="text" class="form-control" placeholder="Username" name="username" />
+                @error('username')
+                  <p class="validetion_error">{{$message}}</p>
+                @enderror
               </div>
-              <div>
-                <input type="password" class="form-control" placeholder="Password" name="password" required="" />
+              <div class="input_fields">
+                <input type="password" class="form-control" placeholder="Password" name="password" />
+                @error('password')
+                  <p class="validetion_error">{{$message}}</p>
+                @enderror
               </div>
               <div>
                 <input type="submit" class="btn btn-default submit" value="Log in">

@@ -1,7 +1,15 @@
 @extends('layouts.default')
 
 @section('content')
-<h1>Registration</h1>
+<h1>Add Branch</h1>
+@if(session()->has('insert'))
+    <div class="alert alert-success">
+        {{session()->get('insert')}}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+@endif
 <div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
@@ -30,12 +38,14 @@
                 <form action="{{ url('branch_insert')}}" method='POST' id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
                     @csrf
                     <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Branch short Name <span
-                                class="required">*</span>
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Branch short Name 
+                            <span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                            <input type="text" name="branch_short_name" id="first-name" required="required"
-                                class="form-control col-md-7 col-xs-12">
+                            <input type="text" name="branch_short_name" id="first-name" class="form-control col-md-7 col-xs-12">
+                            @error('branch_short_name')
+                                <p class="validetion_error">{{$message}}</p>
+                            @enderror
                         </div>
                     </div>
                     <div class="form-group">
@@ -43,8 +53,10 @@
                                 class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                            <input type="text" name="branch_full_name" id="last-name" name="last-name" required="required"
-                                class="form-control col-md-7 col-xs-12">
+                            <input type="text" name="branch_full_name" id="last-name" name="last-name" class="form-control col-md-7 col-xs-12">
+                            @error('branch_full_name')
+                                <p class="validetion_error">{{$message}}</p>
+                            @enderror
                         </div>
                     </div>
                    <div class="ln_solid"></div>

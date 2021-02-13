@@ -35,10 +35,20 @@ class BranchController extends Controller
      */
     public function store(Request $request)
     {
+        // validation of form
+        $request->validate([
+            'branch_short_name' => 'required | min:2',
+            'branch_full_name' => 'required | min:2'
+        ]);
+
         $branch = new branch;
         $branch->branch_short_name = $request->branch_short_name;
         $branch->branch_full_name = $request->branch_full_name;
         $branch->save();
+
+        // set flash message
+        session()->flash('insert', 'Insert Branch SuccessFully.');
+
         return redirect('add_branch');
     }
 
@@ -75,16 +85,29 @@ class BranchController extends Controller
      */
     public function update(Request $request, $id)
     {
+        // validation
+        $request->validate([
+            'branch_short_name' => 'required | min:2',
+            'branch_full_name' => 'required | min:2'
+        ]);
+
         $branch = branch::find($id);
         $branch->branch_short_name = $request->branch_short_name;
         $branch->branch_full_name = $request->branch_full_name;
         $branch->save();
+
+        // set flash message for update branch
+        session()->flash('update', 'Update Branch SuccessFully.');
+
         return redirect('branch_details');
     }
 
     /**
      * Remove the specified resource from storage.
      *
+     * DELETE BRANCH
+     * -------------
+     * 
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
@@ -92,6 +115,9 @@ class BranchController extends Controller
     {
         $branch = branch::find($id);
         $branch->delete();
+
+        // set flash message for delete branch
+        session()->flash('delete', 'Branch Delete SuccessFully..');
         return redirect('branch_details');
     }
 }

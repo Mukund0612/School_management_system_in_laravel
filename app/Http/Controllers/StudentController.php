@@ -40,6 +40,17 @@ class StudentController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'stu_name' => 'required | alpha | min:2',
+            'fath_name' => 'required | alpha | min:2',
+            'class' => 'required | numeric',
+            'phone_no' => 'required | numeric | size:10',
+            'email' => 'required | email',
+            'branch_id' => 'required',
+            'course_id' => 'required',
+            'profile_image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+        ]);
+
         $students = new students;
         $students->stu_name = $request->stu_name;
         $students->fath_name = $request->fath_name;
@@ -98,7 +109,8 @@ class StudentController extends Controller
     public function edit($id)
     {
         $student = students::find($id);
-        return view('student_edit', compact('student'));
+        $branches = branch::all();
+        return view('student_edit', compact('student', 'branches'));
     }
 
     /**
@@ -110,15 +122,30 @@ class StudentController extends Controller
      */
     public function update(Request $request, $id)
     {
+        // form validation
+        $request->validate([
+            'stu_name' => 'required | alpha | min:2',
+            'fath_name' => 'required | alpha | min:2',
+            'class' => 'required | numeric',
+            'phone_no' => 'required|digits:10',
+            'email' => 'required | email',
+            'branch_id' => 'required',
+            'course_id' => 'required',
+        ]);
+
         $student = students::find($id);
         $student->stu_name = $request->stu_name;
         $student->fath_name = $request->fath_name;
         $student->class = $request->class;
         $student->phone_no = $request->phone_no;
         $student->email = $request->email;
-        $students->course_id = $request->course_id;
-        $students->branch_id = $request->branch_id;
+        $student->course_id = $request->course_id;
+        $student->branch_id = $request->branch_id;
         $student->save();
+
+        // Set flash message and redirect last url
+        session()->flash('update', 'Profile Update SuccessFull..');
+
         return redirect('student_details');
     }
 
@@ -132,6 +159,10 @@ class StudentController extends Controller
     {
         $student = students::find($id);
         $student->delete();
+        
+        // Set flash message and redirect last url
+        session()->flash('delete', 'Profile delete SuccessFull..');
+
         return redirect('student_details');
     }
 

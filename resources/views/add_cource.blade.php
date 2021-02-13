@@ -39,6 +39,9 @@
                                     <option value="{{$branch->id}}">{{$branch->branch_full_name}}</option>
                                 @endforeach
                             </select>
+                            @error('branch_id')
+                                <p class="validetion_error">{{$message}}</p>
+                            @enderror
                         </div>
                     </div>
                     <div class="form-group">
@@ -46,8 +49,10 @@
                                 class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                            <input type="text" name="course_name" required="required"
-                                class="form-control col-md-7 col-xs-12">
+                            <input type="text" name="course_name" class="form-control col-md-7 col-xs-12">
+                            @error('course_name')
+                                <p class="validetion_error">{{$message}}</p>
+                            @enderror
                         </div>
                     </div>
                    <div class="ln_solid"></div>

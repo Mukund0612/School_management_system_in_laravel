@@ -4,7 +4,7 @@
 
 <div class="container" style="margin-top: 100px;">
     <div class="row text-center">
-        <img src="{{ asset('/profile_images')}}/{{ $student[0]->profile_image}}" alt="" height="200" widtd='200' style="border-radius: 50%;" />
+        <img src="{{ asset('/profile_images')}}/{{ $student[0]->profile_image}}" alt="" height="200" width='200' style="border-radius: 50%;" />
         <div class="text-center">
             <h1 style="margin:30px 0px;">{{ $student[0]->stu_name}}'s Profile </h1>
         </div>

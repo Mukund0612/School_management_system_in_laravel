@@ -34,8 +34,10 @@
                                 class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                            <input type="text" name="stu_name" id="first-name" required="required"
-                                class="form-control col-md-7 col-xs-12">
+                            <input type="text" name="stu_name" id="first-name" class="form-control col-md-7 col-xs-12" value="{{ old('stu_name')}}">
+                            @error('stu_name')
+                            <p class="validetion_error">{{$message}}</p>
+                            @enderror
                         </div>
                     </div>
                     <div class="form-group">
@@ -43,17 +45,21 @@
                                 class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                            <input type="text" name="fath_name" id="last-name" name="last-name" required="required"
-                                class="form-control col-md-7 col-xs-12">
+                            <input type="text" name="fath_name" id="last-name" name="last-name" class="form-control col-md-7 col-xs-12" value="{{ old('fath_name')}}">
+                            @error('fath_name')
+                            <p class="validetion_error">{{$message}}</p>
+                            @enderror
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Class<span
-                                class="required">*</span>
+                        <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Class
+                            <span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                            <input id="middle-name" name="class" class="form-control col-md-7 col-xs-12" type="text"
-                                name="middle-name">
+                            <input id="middle-name" name="class" class="form-control col-md-7 col-xs-12" type="text" value="{{ old('class')}}">
+                            @error('class')
+                            <p class="validetion_error">{{$message}}</p>
+                            @enderror
                         </div>
                     </div>
                     <div class="form-group">
@@ -61,8 +67,10 @@
                                 class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                            <input id="birthday" name='phone_no' class="date-picker form-control col-md-7 col-xs-12" required="required"
-                                type="text">
+                            <input id="birthday" name='phone_no' class="date-picker form-control col-md-7 col-xs-12" type="text" value="{{ old('phone_no')}}">
+                            @error('phone_no')
+                            <p class="validetion_error">{{$message}}</p>
+                            @enderror
                         </div>
                     </div>
                     <div class="form-group">
@@ -70,8 +78,10 @@
                                 class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                            <input id="birthday" name="email" class="date-picker form-control col-md-7 col-xs-12" required="required"
-                                type="text">
+                            <input id="birthday" name="email" class="date-picker form-control col-md-7 col-xs-12" type="text" value="{{ old('email')}}">
+                            @error('email')
+                            <p class="validetion_error">{{$message}}</p>
+                            @enderror
                         </div>
                     </div>
                     <div class="form-group">
@@ -82,9 +92,12 @@
                             <select name="branch_id" id="" class="date-picker form-control col-md-7 col-xs-12 branches">
                                 <option value="">-- Select Branch --</option>
                                 @foreach($branches as $branch)
-                                <option value="{{$branch->id}}">{{$branch->branch_full_name}}</option>
+                                <option value="{{$branch->id}}" {{ ( old("branch_id") == $branch->id ? "selected":"") }} >{{$branch->branch_full_name}}</option>
                                 @endforeach
                             </select>
+                            @error('branch_id')
+                            <p class="validetion_error">{{$message}}</p>
+                            @enderror
                         </div>
                     </div>
                     <div class="form-group">
@@ -95,6 +108,9 @@
                             <select name="course_id" id="" class="date-picker form-control col-md-7 col-xs-12 courses">
                                 <option value="">-- Select Course --</option>
                             </select>
+                            @error('course_id')
+                            <p class="validetion_error">{{$message}}</p>
+                            @enderror
                         </div>
                     </div>
                     <div class="form-group">
@@ -103,6 +119,9 @@
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                             <input type="file" name="profile_image" id="image" class="date-picker form-control col-md-7 col-xs-12">
+                            @error('profile_image')
+                            <p class="validetion_error">{{$message}}</p>
+                            @enderror
                         </div>
                     </div>
                     <div class="ln_solid"></div>

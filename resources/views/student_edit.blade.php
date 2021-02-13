@@ -30,12 +30,14 @@
                 <form action="{{ route('student-update', $student->id)}}" method='POST' id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
                     @csrf
                     <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Student Name <span
-                                class="required">*</span>
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Student Name 
+                            <span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                            <input type="text" name="stu_name" value="{{$student->stu_name}}" id="first-name" required="required"
-                                class="form-control col-md-7 col-xs-12">
+                            <input type="text" name="stu_name" value="{{$student->stu_name}}" id="first-name" class="form-control col-md-7 col-xs-12">
+                            @error('stu_name')
+                            <p class="validetion_error">{{$message}}</p>
+                            @enderror
                         </div>
                     </div>
                     <div class="form-group">
@@ -44,7 +46,10 @@
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                             <input type="text" name="fath_name" id="last-name" value="{{$student->fath_name}}" required="required"
-                                class="form-control col-md-7 col-xs-12">
+                                class="form-control col-md-7 col-xs-12" value="{{ old('fath_name')}}">
+                            @error('fath_name')
+                            <p class="validetion_error">{{$message}}</p>
+                            @enderror
                         </div>
                     </div>
                     <div class="form-group">
@@ -52,8 +57,10 @@
                                 class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                            <input id="middle-name" name="class" value="{{$student->class}}" class="form-control col-md-7 col-xs-12" type="text"
-                                name="middle-name">
+                            <input id="middle-name" name="class" value="{{$student->class}}" class="form-control col-md-7 col-xs-12" type="text" name="middle-name" value="{{ old('class')}}">
+                            @error('class')
+                            <p class="validetion_error">{{$message}}</p>
+                            @enderror
                         </div>
                     </div>
                     <div class="form-group">
@@ -61,8 +68,10 @@
                                 class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                            <input id="birthday" name='phone_no' value="{{$student->phone_no}}" class="date-picker form-control col-md-7 col-xs-12" required="required"
-                                type="text">
+                            <input id="birthday" name='phone_no' value="{{$student->phone_no}}" class="date-picker form-control col-md-7 col-xs-12" type="text" value="{{ old('phone_no')}}">
+                            @error('phone_no')
+                            <p class="validetion_error">{{$message}}</p>
+                            @enderror
                         </div>
                     </div>
                     <div class="form-group">
@@ -70,8 +79,39 @@
                                 class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                            <input id="birthday" name="email" value="{{$student->email}}" class="date-picker form-control col-md-7 col-xs-12" required="required"
-                                type="text">
+                            <input id="birthday" name="email" value="{{$student->email}}" class="date-picker form-control col-md-7 col-xs-12" type="text" value="{{ old('email')}}">
+                            @error('email')
+                            <p class="validetion_error">{{$message}}</p>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Branch: <span
+                                class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <select name="branch_id" id="" class="date-picker form-control col-md-7 col-xs-12 branches">
+                                <option value="">-- Select Branch --</option>
+                                @foreach($branches as $branch)
+                                <option value="{{$branch->id}}" {{ ( old("branch_id") == $branch->id ? "selected":"") }} >{{$branch->branch_full_name}}</option>
+                                @endforeach
+                            </select>
+                            @error('branch_id')
+                            <p class="validetion_error">{{$message}}</p>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Course: <span
+                                class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <select name="course_id" id="" class="date-picker form-control col-md-7 col-xs-12 courses">
+                                <option value="">-- Select Course --</option>
+                            </select>
+                            @error('course_id')
+                            <p class="validetion_error">{{$message}}</p>
+                            @enderror
                         </div>
                     </div>
                     <div class="ln_solid"></div>
@@ -88,3 +128,36 @@
     </div>
 </div>
 @endsection
+
+@push('footer-scripts')
+<script text="text/javascript">
+    $(document).on('change', '.branches', function(){
+        branch_id = $(this).val();
+        $.ajax({
+            url: "{{ URL::to('/')}}/student/courses",
+            dataType: 'json',
+            method: 'POST',
+            data:{
+                'id':branch_id, '_token': "{{ csrf_token() }}"
+            },
+            success: function(data){
+                
+                var courses = '<option value="">-- Select Course --</option>';
+                var arr = data.courses.length;
+                var aa = data.courses;
+
+                for (var i = 0; i < arr; i++) {
+                    courses += '<option value="'+aa[i].id+'"> '+aa[i].course_name+' </option>';
+                }
+                
+                // console.log(courses.length);
+                if (arr == 0) {
+                    courses = '<option value=""> No Coures Available </option>';
+                }
+
+                $('.courses').html(courses);
+            }
+        })
+    });
+</script>
+@endpush

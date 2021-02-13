@@ -12,4 +12,4 @@
         <td><a href="{{route('student-delete', ['id' => $student->id])}}">Delete</a></td>
     </tr>
     @endforeach
-    <tr><td class="pag_link" colspan="9">{{$students->links()}}</td></tr>
+    <tr><td class="pag_link" colspan="10">{{$students->links()}}</td></tr>
