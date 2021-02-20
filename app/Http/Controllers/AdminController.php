@@ -20,15 +20,10 @@ class AdminController extends Controller
             'password' => 'required'
         ]);
 
-
-
         $admin = admin::where('username', $request->username)->where('password', $request->password)->get()->toArray();
         
         if ($admin) {
-            
             $request->session()->put('admin_session', $admin[0]['id']);
-            session(['admin_session' => $admin[0]['id']]);
-            
             return redirect('dashboard');
         } else {
             session::flash('coc', 'Email and Password Not Match.');
