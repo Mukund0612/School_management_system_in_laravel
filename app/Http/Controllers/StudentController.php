@@ -40,11 +40,13 @@ class StudentController extends Controller
      */
     public function store(Request $request)
     {
+        $varification_code = generate_varification_code();
+
         $request->validate([
             'stu_name' => 'required | alpha | min:2',
             'fath_name' => 'required | alpha | min:2',
             'class' => 'required | numeric',
-            'phone_no' => 'required | numeric | size:10',
+            'phone_no' => 'required | numeric | digits:10',
             'email' => 'required | email',
             'branch_id' => 'required',
             'course_id' => 'required',
@@ -59,13 +61,28 @@ class StudentController extends Controller
         $students->email = $request->email;
         $students->course_id = $request->course_id;
         $students->branch_id = $request->branch_id;
+        $students->verification_code = $varification_code;
+
         // instert file name in database with extention 
         $students->profile_image = $request->file('profile_image')->getClientOriginalName();
         $students->save();
-        
+
         // Move image to the our folder
         $request->profile_image->move(public_path('profile_images'), $students->profile_image);
+
+        // send mail to register studend
+        $varification_link = "http://127.0.0.1:8000/emailvarification/".$varification_code;
         
+        $details = [
+            'title' => "Verify your Account.",
+            'body' => 'Click on this link to Verify your account.',
+            'varification_link' => $varification_link
+        ];
+
+        \Mail::to($students->email)->send(new \App\Mail\RegisterUser($details));
+
+        session()->flash('mailsend', 'Verify mail send your Mail check and Verify it.');
+
         return redirect('registration');
     }
 
@@ -159,7 +176,7 @@ class StudentController extends Controller
     {
         $student = students::find($id);
         $student->delete();
-        
+
         // Set flash message and redirect last url
         session()->flash('delete', 'Profile delete SuccessFull..');
 
@@ -213,7 +230,7 @@ class StudentController extends Controller
     {
         $id = $request->id;
         $student = students::where(['id' => $id])->get();
-        
+
         return view('student_profile', compact('student'));
     }
     
@@ -225,7 +242,6 @@ class StudentController extends Controller
      */
     public function fees_form(Request $request)
     {
-        // die('yes');
         $id = $request->id;
         $fees = student_fees::where(['student_id' => $id])->get();
         return view('fees_form', compact('fees', 'id'));
@@ -245,5 +261,19 @@ class StudentController extends Controller
         $fees->amount = $request->amount;
         $fees->save();
         return redirect( route('student-fees', ['id' => $id]));
+    }
+
+    public function email_varification($code)
+    {
+        $student = students::where('verification_code', $code)->get();
+        $students = students::find($student[0]->id);
+        if ($student) {
+            $students->verification_status = 1;
+        }
+        $students->save();
+        // Set flash message and redirect last url
+        session()->flash('verification', 'Email Verification SuccessFull..');
+
+        return redirect('student_details');
     }
 }

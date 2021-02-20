@@ -2,6 +2,16 @@
 
 @section('content')
 <h1>Registration</h1>
+
+@if(session()->has('mailsend'))
+<div class="alert alert-success">
+    {{ session()->get('mailsend')}}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+@endif
+
 <div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">

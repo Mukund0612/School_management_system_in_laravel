@@ -27,6 +27,8 @@ Route::get('/logout', function () {
     return redirect('/');
 });
 
+Route::get('emailvarification/{code}', 'StudentController@email_varification');
+
 Route::group(['middleware' => ['beforeLogin']], function(){
 
     Route::view('dashboard', 'dashboard');
@@ -108,4 +110,15 @@ Route::group(['middleware' => ['beforeLogin']], function(){
     
     // Branch Data edit
     Route::get('/course_delete/{id}', ['as'=>'course-delete' , 'uses'=>'CourseController@destroy']);
+});
+
+
+Route::get('/mail_sent', function(){
+    $details = [
+        'title' => "Testing mail using laravel",
+        'body' => 'Nothing to more'
+    ];
+
+    \Mail::to('hirparamukund@gmail.com')->send(new \App\Mail\RegisterUser($details));
+    echo "Thanks for register";
 });

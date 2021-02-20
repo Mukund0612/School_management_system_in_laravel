@@ -14,9 +14,19 @@
     Phone Number
     <input type="checkbox" class="paramiter" id="paramiter_4" name="param[]" value="email">
     Email
+
+@if(session()->has('verification'))
+<div class="alert alert-success">
+    {{ session()->get('verification')}}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+@endif
+
 @if(session()->has('update'))
 <div class="alert alert-success">
-    {{ session()->get('success')}}
+    {{ session()->get('update')}}
     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
     </button>
